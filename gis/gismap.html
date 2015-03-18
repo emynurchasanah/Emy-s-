@@ -1,0 +1,110 @@
+<html>
+<head>
+<title>Google Maps</title>
+<link href="http://code.google.com/apis/maps/documentation/javascript/examples/standard.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+//google maps GIS by desrizal
+//dibuat tanggal 9 Oktober 2010
+var peta;
+function peta_awal(){
+    daftar_lokasi();
+    var ums = new google.maps.LatLng(-7.8225738, 110.3722546);
+    var petaoption = {
+        zoom: 9,
+        center: ums,
+        mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+    peta = new google.maps.Map(document.getElementById("petaku"),petaoption);
+    google.maps.event.addListener(peta,'click',function(event){
+        kasihtanda(event.latLng);
+    });
+}
+
+function kasihtanda(lokasi){
+    $("#form_lokasi").slideDown();
+    $("#cx").val(lokasi.lat());
+    $("#cy").val(lokasi.lng());
+    tanda = new google.maps.Marker({
+        position: lokasi,
+        map: peta
+    });
+}
+
+$(document).ready(function(){
+    $("#simpan").click(function(){
+        var koordinatx = $("#cx").val();
+        var koordinaty = $("#cy").val();
+        var nama = $("#namax").val();
+        var des = $("#deskripsi").val();
+        $("#loading").show();
+        $.ajax({
+            url: "simpanlokasi.php",
+            data: "koordinatx="+koordinatx+"&koordinaty="+koordinaty+"&nama="+nama+"&des="+des,
+            cache: false,
+            success: function(msg){
+                $("#teks").html(msg);
+                $("#loading").hide();
+                $("#form_lokasi").slideUp();
+                $("#cx").val("");
+                $("#cy").val("");
+                $("#namax").val("");
+                $("#deskripsi").val("");
+            }
+        });
+    });
+    
+    $("#batal").click(function(){
+        $("#form_lokasi").slideUp();
+    });
+});
+
+function daftar_lokasi(){
+    $('#teks').load('daftar_lokasi.php');
+}
+
+function setpeta(x,y,id){
+    var lokasibaru = new google.maps.LatLng(x, y);
+    var petaoption = {
+        zoom: 9,
+        center: lokasibaru,
+        mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+    peta = new google.maps.Map(document.getElementById("petaku"),petaoption);
+    tanda = new google.maps.Marker({
+        position: lokasibaru,
+        map: peta
+    });
+    var idnya = "#"+id;
+    var isistring = $(idnya).html();
+    var infowindow = new google.maps.InfoWindow({
+        content: isistring
+    });
+    google.maps.event.addListener(tanda, 'click', function() {
+      infowindow.open(peta,tanda);
+    });
+    google.maps.event.addListener(peta,'click',function(event){
+        kasihtanda(event.latLng);
+    });
+}
+</script>
+</head>
+<body onload="peta_awal()">
+<center>
+<div id="petaku" style="width:600px; height:400px"></div>
+<div id="form_lokasi" style="display:none;background-color:yellow;width:600px;height:200px;text-align:left;padding:10px">
+Koordinat : <br>X<input type=text name=latlng id=cx size=25>, Y<input type=text name=latlngy id=cy size=25><br>
+Nama Lokasi : <br><input type=text name="nama" id="namax"><br>
+Desrkripsi :<br>
+<textarea cols=20 rows=5 name="deskripsi" id="deskripsi"></textarea><br>
+<button id="simpan">Simpan</button>
+<button id="batal">Batal</button>
+<img src="ajax-loader.gif" style="display:none" id="loading">
+</div>
+<div style="text-align:left;width:600px">
+<h4>Daftar lokasi yang tersimpan</h4>
+<div id=teks></div>
+</div>
+</body>
+</html> 

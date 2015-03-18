@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+	<title>Tugas 1</title>
+	<script
+		type="text/javascript"
+		src="https://maps.googleapis.com/maps/api/js">
+	</script>
+	
+	<style type="text/css">
+		#mapDiv {width: 800px; height: 500px;}
+	</style>
+	
+	<script type="text/javascript">
+		var map;
+		function initMap() {
+			google.maps.visualRefresh = true;
+			var mapOptions = {
+				center: new google.maps.LatLng(-7.8225738, 110.3722546),
+				zoom: 10,
+				mapTypeId: google.maps.MapTypeID.ROADMAP
+			};
+			var mapElement = document.getElementById('mapDiv');
+			map = new google.maps.Map(mapElement, mapOptions);
+		} 
+		google.maps.event.addDomListener(window, 'load', initMap);
+	</script>
+</head>
+<body>
+	<b>My Fist Map </b>
+	<div id"mapDiv"></div>
+</body>
+</html>
