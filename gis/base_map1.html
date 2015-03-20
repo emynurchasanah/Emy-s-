@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript"
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtS_6mlBUfmxGrmePDkeg3iRS0cgVHUXk&sensor=false">
+        </script>
+        <style type="text/css">
+              #mapDiv { width: 800px; height: 500px; }
+        </style>
+        <script type="text/javascript">
+             
+              var map;
+              function initMap () {
+
+                    google.maps.visualRefresh = true;
+
+
+                    var mapOptions = {
+                          center: new google.maps.LatLng(-7.5667, 110.7500),
+                          zoom: 10,
+                          mapTypeId: google.maps.MapTypeId.ROADMAP,
+                          disableDefaultUI: true
+                    };
+
+                    var mapElement = document.getElementById('mapDiv');
+                    map = new google.maps.Map(mapElement, mapOptions);
+
+                    startButtonEvents();
+              }
+
+              function startButtonEvents () {
+                  document.getElementById('btnRoad').addEventListener('click', function(){
+                      map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+                  });
+                  document.getElementById('btnSat').addEventListener('click', function(){
+                      map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+                  });
+                  document.getElementById('btnHyb').addEventListener('click', function(){
+                      map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+                  });
+                  document.getElementById('btnTer').addEventListener('click', function(){
+                      map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
+                  });
+              }
+
+              google.maps.event.addDomListener(window, 'load', initMap);
+        </script>
+    </head>
+    <body>
+        <b>Base Maps</b>
+        <input id="btnRoad" type="button" value="RoadMap">
+        <input id="btnSat" type="button" value="Satellite">
+        <input id="btnHyb" type="button" value="Hybrid">
+        <input id="btnTer" type="button" value="Terrain">
+        <div id="mapDiv"></div>
+    </body>
+</html>
