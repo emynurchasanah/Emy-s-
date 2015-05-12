@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript"
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtS_6mlBUfmxGrmePDkeg3iRS0cgVHUXk&sensor=false">
+        </script>
+        <style type="text/css">
+              html { height: 100% }
+              body { height: 100%; margin: 5; }
+              #mapDiv { width: 800px; height: 500px; }
+        </style>
+        <script type="text/javascript">
+              var map;
+
+              var areaCoordinates = [
+                  [-7.5598973,110.7679146],[-7.5539201,110.7674962],
+                  [-7.5552708,110.7707148],[-7.5552708,110.7707148],
+                  [-7.5551432,110.770865],[-7.5573341,110.7740729],
+                  [-7.5586955,110.7714229],[-7.5593762,110.7693093]
+              ];
+
+              function addPolygon () {
+                  var pointCount = areaCoordinates.length;
+                  var areaPath = [];
+                  for (var i=0; i < pointCount; i++) {
+                      var tempLatLng = new google.maps.LatLng(areaCoordinates[i][0], areaCoordinates[i][1]);
+                      areaPath.push(tempLatLng);
+                  }
+				  
+                  var polygonOptions = {
+                      paths: areaPath,
+                      strokeColor: '#FF0000',
+                      strokeOpacity: 0.9,
+                      strokeWeight: 3,
+                      fillColor: '#FFFF00',
+                      fillOpacity: 0.25
+                  }
+
+                  var polygon = new google.maps.Polygon(polygonOptions);
+                  polygon.setMap(map);
+              }
+
+              function initMap() {
+                    google.maps.visualRefresh = true;
+					
+                    var mapOptions = {
+                          center: new google.maps.LatLng(-7.5569898,110.7700844),
+                          zoom: 18,
+                          mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    var mapElement = document.getElementById('mapDiv');
+					
+                    map = new google.maps.Map(mapElement, mapOptions);
+
+                    addPolygon();
+              }
+
+              google.maps.event.addDomListener(window, 'load', initMap);
+        </script>
+    </head>
+    <body>
+        <b>Area UMS</b><br/>
+        <div id="mapDiv"></div>
+    </body>
+</html>

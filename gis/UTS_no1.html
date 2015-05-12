@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript"
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtS_6mlBUfmxGrmePDkeg3iRS0cgVHUXk&sensor=false">
+        </script>
+
+        <style type="text/css">
+              #mapDiv { width: 800px; height: 500px; }
+        </style>
+		
+        <script type="text/javascript">
+              
+              var map;
+              function initMap () {
+
+                    var mapOptions = {
+
+                          center: new google.maps.LatLng(-7.5569898,110.7700844),
+                          zoom: 18,
+                          mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+
+                    var mapElement = document.getElementById('mapDiv');
+
+                    map = new google.maps.Map(mapElement, mapOptions);
+              }
+
+              google.maps.event.addDomListener(window, 'load', initMap);
+        </script>
+    </head>
+    <body>
+        <b>Universitas Muhammadiyah Surakarta</b>
+        <div id="mapDiv"></div>
+    </body>
+</html>
